@@ -8,10 +8,14 @@
 #ifndef INC_CONFIG_H_
 #define INC_CONFIG_H_
 
+////////////////		INCLUDES
+
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include <stdbool.h>
+
+////////////////		PINOUT SETTINGS
 
 #define SEED_SENSOR_CHANNEL_1_PORT SENSOR_1_GPIO_Port
 #define SEED_SENSOR_CHANNEL_1_PIN SENSOR_1_Pin
@@ -48,5 +52,30 @@
 #define DROPPER_STEPPER_DIR_PORT STEPPER2_DIR_GPIO_Port
 #define DROPPER_STEPPER_DIR_PIN STEPPER2_DIR_Pin
 
+
+////////////////		HARDWARE SETTINGS
+
+#define DRUM_STEPPER_MICROSTEPPING 32
+#define DROPPER_STEPPER_MICROSTEPPING 32
+#define DEFAULT_ANGLE_PER_STEP 1.8
+
+
+////////////////		MECHANICAL SETTINGS
+
+#define DROPPER_STEPPER_PULLEY_DIAMETER_MM 10
+#define NUMBER_OF_CHANNELS 6
+#define NUMBER_OF_VIBRATE_MOTORS 2
+
+
+////////////////		SOWING SETTINGS
+
+#define SHAKING_TIME_AFTER_DROPPER_REFILL_MS 15000
+#define SOWING_TIME_FOR_CASUAL_SEEDS_MS 500
+#define SOWING_PELLETED_SEED_MAX_TIMEOUT_MS 3000
+
+
+////////////////		OTHER SETTINGS
+
+#define PI 3.14
 
 #endif /* INC_CONFIG_H_ */

@@ -96,18 +96,16 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
  	_dropper_Init();
- 	_dropper_SelfTest();
 
-// 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-//	HAL_GPIO_TogglePin(STEPPER2_PULSE_GPIO_Port, STEPPER2_PULSE_Pin);
-//	HAL_GPIO_TogglePin(STEPPER1_PULSE_GPIO_Port, STEPPER1_PULSE_Pin);
-//	HAL_Delay(1);
+		_dropper_RotateDrum_deg(180.0);
+		_dropper_MoveDropper_mm(50.0);
+		HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
