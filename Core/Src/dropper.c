@@ -176,10 +176,11 @@ void _dropper_DrumSetMoveDirection(_stepperMoveDirection md){
 	}
 }
 
-void _dropper_RotateDrum_deg(float angle_deg){
+bool _dropper_RotateDrum_deg(float angle_deg, bool waitForSeed){
 
 	if(angle_deg < 0){
 		_dropper_DrumSetMoveDirection(BACKWARD);
+		angle_deg = -angle_deg;
 	}
 	else{
 		_dropper_DrumSetMoveDirection(FORWARD);
@@ -190,15 +191,23 @@ void _dropper_RotateDrum_deg(float angle_deg){
 	HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 49);
 	stepCounter = 0;
-	while(stepCounter < stepsToDo);
+	while(stepCounter < stepsToDo){
+		if(HAL_GPIO_ReadPin(SEED_SENSOR_CHANNEL_1_PORT, SEED_SENSOR_CHANNEL_1_PIN) == GPIO_PIN_RESET && waitForSeed){
+			__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
+			HAL_TIM_PWM_Stop_IT(&htim3, TIM_CHANNEL_1);
+			return true;
+		}
+	}
 	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
 	HAL_TIM_PWM_Stop_IT(&htim3, TIM_CHANNEL_1);
+	return false;
 }
 
 void _dropper_MoveDropper_mm(float distance_mm){
 
 	if(distance_mm < 0){
 		_dropper_DropperSetMoveDirection(BACKWARD);
+		distance_mm = -distance_mm;
 	}
 	else{
 		_dropper_DropperSetMoveDirection(FORWARD);
@@ -215,22 +224,51 @@ void _dropper_MoveDropper_mm(float distance_mm){
 	HAL_TIM_PWM_Stop_IT(&htim3, TIM_CHANNEL_2);
 }
 
-void _dropper_SowSeeds(_dropperChannelName channel){
+bool _dropper_SowSeeds(_dropperChannelName channel){
 
-	//casula seeds
+	//pelleted seeds
 	if(channel == CHANNEL_1 || channel == CHANNEL_2 || channel == CHANNEL_3){
+		_dropper_OpenChannel(channel);
+		HAL_Delay(10);
+		_dropper_StartVibrate(PELLETED);
+
+		uint32_t startTime, currentTime;
+		startTime = currentTime = HAL_GetTick();
+
+		bool isSown = false;
+		_stepperMoveDirection nextDirection = FORWARD;
+
+		while(currentTime - startTime < SOWING_PELLETED_SEED_MAX_TIMEOUT_MS && !isSown){
+			currentTime = HAL_GetTick();
+			if(nextDirection == FORWARD){
+				isSown = _dropper_RotateDrum_deg(30, true);
+				nextDirection = BACKWARD;
+			}
+			else{
+				isSown = _dropper_RotateDrum_deg(-15, true);
+				nextDirection = FORWARD;
+			}
+		}
+
+		_dropper_StopVibrate(PELLETED);
+		_dropper_CloseChannel(channel);
+
+		return isSown;
+	}
+
+	//casual seeds
+	else if(channel == CHANNEL_4 || channel == CHANNEL_5 || channel == CHANNEL_6){
 		_dropper_OpenChannel(channel);
 		HAL_Delay(10);
 		_dropper_StartVibrate(CASUAL);
 		HAL_Delay(SOWING_TIME_FOR_CASUAL_SEEDS_MS);
 		_dropper_StopVibrate(CASUAL);
 		_dropper_CloseChannel(channel);
+
+		return true;
 	}
 
-	//pelleted seeds
-	else if(channel == CHANNEL_1 || channel == CHANNEL_2 || channel == CHANNEL_3){
-
-	}
+	return false;
 }
 
 void _dropper_ShakeSeeds(uint32_t delayTime){

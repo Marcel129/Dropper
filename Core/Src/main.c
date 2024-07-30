@@ -103,8 +103,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		_dropper_RotateDrum_deg(180.0);
 		_dropper_MoveDropper_mm(50.0);
+		_dropper_SowSeeds(CHANNEL_4);
+		_dropper_SowSeeds(CHANNEL_5);
+		_dropper_SowSeeds(CHANNEL_6);
+
+		_dropper_SowSeeds(CHANNEL_1);
+		_dropper_SowSeeds(CHANNEL_2);
+		_dropper_SowSeeds(CHANNEL_3);
 		HAL_Delay(1000);
     /* USER CODE END WHILE */
 

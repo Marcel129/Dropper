@@ -10,3 +10,5 @@
 ../Core/Src/dropper.c:179:6:_dropper_RotateDrum_deg	24	static
 ../Core/Src/dropper.c:198:6:_dropper_MoveDropper_mm	24	static
 ../Core/Src/dropper.c:218:6:_dropper_SowSeeds	16	static
+../Core/Src/dropper.c:243:6:_dropper_ShakeSeeds	16	static
+../Core/Src/dropper.c:253:6:_dropper_Home	4	static

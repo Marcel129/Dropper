@@ -23,7 +23,7 @@ _seedsType;
 typedef enum{FORWARD, BACKWARD}
 _stepperMoveDirection;
 
-typedef enum {IDLE, WORKING, ERROR}
+typedef enum {IDLE, WORKING, HOME, ERR}
 _dropperState;
 
 
@@ -52,7 +52,7 @@ typedef struct{
 	_dropperState dState;
 	_dropperChannel channels [NUMBER_OF_CHANNELS];
 	_dropperVibrateMotor vibrateMotors [NUMBER_OF_VIBRATE_MOTORS];
-}_dropperChannel;
+}_dropper;
 
 
 ////////////////		FUNCTIONS DECLARATIONS
@@ -62,12 +62,12 @@ void _dropper_OpenChannel(_dropperChannelName);
 void _dropper_CloseChannel(_dropperChannelName);
 void _dropper_StartVibrate(_seedsType);
 void _dropper_StopVibrate(_seedsType);
-void _dropper_RotateDrum_deg(float);
+bool _dropper_RotateDrum_deg(float, bool);
 void _dropper_MoveDropper_mm(float);
 void _dropper_DropperSetMoveDirection(_stepperMoveDirection);
 void _dropper_DrumSetMoveDirection(_stepperMoveDirection);
 
-void _dropper_SowSeeds(_dropperChannelName);
+bool _dropper_SowSeeds(_dropperChannelName);
 void _dropper_ShakeSeeds(uint32_t);
 void _dropper_Home();
 
