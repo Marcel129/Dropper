@@ -59,7 +59,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
-#define B1_EXTI_IRQn EXTI15_10_IRQn
 #define SENSOR_9_Pin GPIO_PIN_2
 #define SENSOR_9_GPIO_Port GPIOC
 #define SENSOR_10_Pin GPIO_PIN_3
@@ -114,12 +113,16 @@ void Error_Handler(void);
 #define SENSOR_5_GPIO_Port GPIOA
 #define SENSOR_3_Pin GPIO_PIN_10
 #define SENSOR_3_GPIO_Port GPIOC
+#define SENSOR_3_EXTI_IRQn EXTI15_10_IRQn
 #define SENSOR_1_Pin GPIO_PIN_11
 #define SENSOR_1_GPIO_Port GPIOC
-#define SENSOR_4_Pin GPIO_PIN_12
-#define SENSOR_4_GPIO_Port GPIOC
-#define SENSOR_2_Pin GPIO_PIN_2
-#define SENSOR_2_GPIO_Port GPIOD
+#define SENSOR_1_EXTI_IRQn EXTI15_10_IRQn
+#define SENSOR_2_Pin GPIO_PIN_12
+#define SENSOR_2_GPIO_Port GPIOC
+#define SENSOR_2_EXTI_IRQn EXTI15_10_IRQn
+#define SENSOR_4_Pin GPIO_PIN_2
+#define SENSOR_4_GPIO_Port GPIOD
+#define SENSOR_4_EXTI_IRQn EXTI2_IRQn
 #define T_SWO_Pin GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
 #define RELAY_6_Pin GPIO_PIN_4

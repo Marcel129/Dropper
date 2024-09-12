@@ -1,3 +1,4 @@
+"./Core/Src/UART_communication.o"
 "./Core/Src/dropper.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
