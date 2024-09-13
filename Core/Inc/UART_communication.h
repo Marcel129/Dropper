@@ -42,11 +42,17 @@ int8_t decodeMsg(command *cmd);
 #define CMD_HOME 			"H11"
 #define CMD_SEND_STATUS 	"S10"
 #define CMD_SOW				"S11"
+#define CMD_SELFTEST		"S12"
 
 #define CONFIRMATION_MSG	"OK\r\n"
 #define REJECTION_MSG		"NOK\r\n"
 #define INVALID_ARGUMET_MSG	"INVALID PARAMS\r\n"
 #define CMD_EXEC_SUCCESFULLY_MSG	"CMD DONE, SUCCESS\r\n"
 #define CMD_EXEC_FAILED_MSG	"CMD DONE, FAILURE\r\n"
+
+#define HELP_TEXT "AVAILABLE FUNCTIONS\r\n\
+		H10 - help, list avaiable commands\r\n\
+		G11 - home the dropper\r\n\
+		G12 - send dropper status\r\n"
 
 #endif //UART_COMMUNICATION_H

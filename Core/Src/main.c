@@ -121,48 +121,13 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		if(_dropper_UART.msgReadyToRead){
-			_dropper_execCmd();
-		}
-		//		for(uint8_t j=0;j<3;j++){
-		//		while(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET){
-		//			HAL_Delay(50);
-		//		}
-		//		if(_dropper_SowSeeds(CHANNEL_1) == SEED_SOWN){
-		//			sownSeeds++;
-		//		}
-		//		sownSeeds = 0;
-		//		for(uint8_t i=0; i<10; i++){
-		//			if(_dropper_SowSeeds(CHANNEL_2) == SEED_SOWN){
-		//				sownSeeds++;
-		//			}
-		//			HAL_Delay(1000);
-		//		}
-		//		}
+//		if(_dropper_UART.msgReadyToRead) _dropper_execCmd();
 
-		//		if(isSeedSown){
-		//			_dropper_CloseChannel(channel);
-		//			HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-		//			isSeedSown = false;
-		//		}
-		//		if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_SET){
-		//			_dropper_OpenChannel(channel);
-		//			HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-		//		}
-		//		if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_SET){
-		//			if(prevState){
-		//				_dropper_OpenChannel(channel);
-		//				HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
-		//				prevState = false;
-		//			}
-		//			else{
-		//				_dropper_CloseChannel(channel);
-		//				HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-		//				prevState = true;
-		//			}
-		//			HAL_Delay(500);
+		_dropper_RotateDrum_deg(90);
+		HAL_Delay(1000);
+		_dropper_RotateDrum_deg(-90);
 
-
+		HAL_Delay(1000);
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

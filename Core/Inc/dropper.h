@@ -61,7 +61,6 @@ typedef struct{
 } _dropperChannel;
 
 typedef struct{
-//	_seedsType seedType;
 	GPIO_TypeDef * port;
 	uint16_t pin;
 
@@ -70,9 +69,23 @@ typedef struct{
 }_dropperVibrateMotor;
 
 typedef struct{
+	GPIO_TypeDef * enPort, *dirPort;
+	uint16_t enPin, dirPin;
+
+	TIM_HandleTypeDef *timerHandler;
+	uint32_t timerChannel;
+
+	uint32_t currentPosition, settedPosition;
+	uint32_t currentSpeed;
+
+	bool invertAxis;
+} _dropperStepperMotor;
+
+typedef struct{
 	_dropperState state;
 	_dropperChannel channels [NUMBER_OF_CHANNELS];
 	_dropperVibrateMotor vibrateMotor;
+	_dropperStepperMotor drumMotor, dropperMotor;
 
 }_dropper;
 
@@ -115,10 +128,6 @@ void _dropper_execCmd_Sow(uint8_t channelNo, uint8_t noOfSeeds);
 void _dropper_execCmd_SowExt(uint8_t channelNo, uint8_t noOfSeeds, uint8_t potNo);
 void _dropper_execCmd_HomeDropper();
 void _dropper_execCmd_MoveDropper(uint32_t distance_mm);
-
-#define HELP_TEXT "AVAILABLE FUNCTIONS\r\n\
-		H10 - help, list avaiable commands\r\n\
-		G11 - home the dropper\r\n\
-		G12 - send dropper status\r\n"
+void _dropper_execCmd_Selftest();
 
 #endif //DROPPER_H
