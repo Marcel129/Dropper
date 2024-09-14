@@ -50,9 +50,17 @@ int8_t decodeMsg(command *cmd);
 #define CMD_EXEC_SUCCESFULLY_MSG	"CMD DONE, SUCCESS\r\n"
 #define CMD_EXEC_FAILED_MSG	"CMD DONE, FAILURE\r\n"
 
+//#define HELP_TEXT "AVAILABLE FUNCTIONS\r\n\
+//		H10 - help, list avaiable commands\r\n\
+//		G11 - home the dropper\r\n\
+//		G12 - send dropper status\r\n"
+
 #define HELP_TEXT "AVAILABLE FUNCTIONS\r\n\
-		H10 - help, list avaiable commands\r\n\
-		G11 - home the dropper\r\n\
-		G12 - send dropper status\r\n"
+		H10 - help, list of avaiable commands\r\n\
+		H11 - home the dropper, not implemented yet\r\n\
+		S10 - send dropper status, not implemented yet\r\n\
+		S11 [channel name] [number of seeds] - sow seeds from given channel,\
+			example: S11 1 1 sow 1 seed from the channel 1\r\n\
+		S12 - dropper selftest, not implemented yet\r\n"
 
 #endif //UART_COMMUNICATION_H

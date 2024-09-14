@@ -61,6 +61,7 @@ typedef struct{
 } _dropperChannel;
 
 typedef struct{
+//	_seedsType seedType;
 	GPIO_TypeDef * port;
 	uint16_t pin;
 
@@ -69,23 +70,9 @@ typedef struct{
 }_dropperVibrateMotor;
 
 typedef struct{
-	GPIO_TypeDef * enPort, *dirPort;
-	uint16_t enPin, dirPin;
-
-	TIM_HandleTypeDef *timerHandler;
-	uint32_t timerChannel;
-
-	uint32_t currentPosition, settedPosition;
-	uint32_t currentSpeed;
-
-	bool invertAxis;
-} _dropperStepperMotor;
-
-typedef struct{
 	_dropperState state;
 	_dropperChannel channels [NUMBER_OF_CHANNELS];
 	_dropperVibrateMotor vibrateMotor;
-	_dropperStepperMotor drumMotor, dropperMotor;
 
 }_dropper;
 

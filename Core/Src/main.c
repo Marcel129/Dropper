@@ -44,7 +44,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	}
 }
 
-uint8_t sownSeeds = 0;
 
 /* USER CODE END Includes */
 
@@ -112,7 +111,6 @@ int main(void)
 	/* USER CODE BEGIN 2 */
 	_dropper_Init();
 	HAL_Delay(2000);
-	_dropperChannelName m_channels[] = {CHANNEL_1, CHANNEL_2, CHANNEL_3};
 
 	//	_dropper_ShakeSeeds(SHAKING_TIME_AFTER_REFILL_MS);
 	/* USER CODE END 2 */
@@ -121,13 +119,8 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-//		if(_dropper_UART.msgReadyToRead) _dropper_execCmd();
+		if(_dropper_UART.msgReadyToRead) _dropper_execCmd();
 
-		_dropper_RotateDrum_deg(90);
-		HAL_Delay(1000);
-		_dropper_RotateDrum_deg(-90);
-
-		HAL_Delay(1000);
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */

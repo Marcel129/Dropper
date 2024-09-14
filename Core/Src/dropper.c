@@ -55,37 +55,22 @@ void _dropper_Init(){
 	dDropper.channels[5].seedType = CASUAL;
 	dDropper.channels[5].status = CHANNEL_CLOSED;
 
-	dDropper.vibrateMotor.port = VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PORT;
-	dDropper.vibrateMotor.pin = VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PIN;
-	dDropper.vibrateMotor.status = MOTOR_OFF;
-
-	dDropper.drumMotor.enPort = PELLETED_SEEDS_STEPPER_EN_PORT;
-	dDropper.drumMotor.enPin = PELLETED_SEEDS_STEPPER_EN_PIN;
-	dDropper.drumMotor.dirPort = PELLETED_SEEDS_STEPPER_DIR_PORT;
-	dDropper.drumMotor.dirPin = PELLETED_SEEDS_STEPPER_DIR_PIN;
-	dDropper.drumMotor.timerHandler = &htim3;
-	dDropper.drumMotor.timerChannel = TIM_CHANNEL_1;
-	dDropper.drumMotor.invertAxis = false;
-
-	dDropper.dropperMotor.enPort = DROPPER_STEPPER_EN_PORT;
-	dDropper.dropperMotor.enPin = DROPPER_STEPPER_EN_PIN;
-	dDropper.dropperMotor.dirPort = DROPPER_STEPPER_DIR_PORT;
-	dDropper.dropperMotor.dirPin = DROPPER_STEPPER_DIR_PIN;
-	dDropper.dropperMotor.timerHandler = &htim3;
-	dDropper.dropperMotor.timerChannel = TIM_CHANNEL_1;
-	dDropper.dropperMotor.invertAxis = false;
 
 	for(uint8_t i = 0; i<NUMBER_OF_CHANNELS; i++){
 		HAL_GPIO_WritePin(dDropper.channels[i].port, dDropper.channels[i].pin, GPIO_PIN_SET);
 	}
 
-	HAL_GPIO_WritePin(dDropper.vibrateMotor.port, dDropper.vibrateMotor.pin, GPIO_PIN_SET);
+	dDropper.vibrateMotor.port = VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PORT;
+	dDropper.vibrateMotor.pin = VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PIN;
+	dDropper.vibrateMotor.status = MOTOR_OFF;
 
-	HAL_GPIO_WritePin(dDropper.drumMotor.enPort, dDropper.drumMotor.enPin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(dDropper.drumMotor.dirPort, dDropper.drumMotor.dirPin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PORT, VIBRATE_MOTOR_FOR_CASUAL_SEEDS_PIN, GPIO_PIN_SET);
 
-	HAL_GPIO_WritePin(dDropper.dropperMotor.enPort, dDropper.dropperMotor.enPin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(dDropper.dropperMotor.dirPort, dDropper.dropperMotor.dirPin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(PELLETED_SEEDS_STEPPER_EN_PORT, PELLETED_SEEDS_STEPPER_EN_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(PELLETED_SEEDS_STEPPER_DIR_PORT, PELLETED_SEEDS_STEPPER_DIR_PIN, GPIO_PIN_RESET);
+
+	HAL_GPIO_WritePin(DROPPER_STEPPER_EN_PORT, DROPPER_STEPPER_EN_PIN, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DROPPER_STEPPER_DIR_PORT, DROPPER_STEPPER_DIR_PIN, GPIO_PIN_RESET);
 
 	//turn off other relays
 	HAL_GPIO_WritePin(RELAY_8_GPIO_Port, RELAY_8_Pin, GPIO_PIN_SET);
@@ -153,30 +138,41 @@ void _dropper_SelfTest(){
 	HAL_Delay(1000);
 	_dropper_StopVibrate();
 	HAL_Delay(500);
+	//	_dropper_StartVibrate(PELLETED);
+	//	HAL_Delay(1000);
+	//	_dropper_StopVibrate(PELLETED);
 
-	_dropper_RotateDrum_deg(90);
-	_dropper_RotateDrum_deg(-90);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 49);
+	stepCounter = 0;
+	while(stepCounter < 6400);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 0);
 
 	HAL_Delay(500);
+
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 49);
+	stepCounter = 0;
+	while(stepCounter < 6400);
+	__HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_2, 0);
 }
 
-void _dropper_setStepperMoveDirection(_dropperStepperMotor * stepper,_stepperMoveDirection md){
+void _dropper_DropperSetMoveDirection(_stepperMoveDirection md){
 	switch(md){
 	case FORWARD:
-		if(!stepper->invertAxis){
-			HAL_GPIO_WritePin(stepper->dirPort, stepper->dirPin, GPIO_PIN_SET);
-		}
-		else{
-			HAL_GPIO_WritePin(stepper->dirPort, stepper->dirPin, GPIO_PIN_RESET);
-		}
+		HAL_GPIO_WritePin(DROPPER_STEPPER_DIR_PORT, DROPPER_STEPPER_DIR_PIN, GPIO_PIN_RESET);
 		break;
 	case BACKWARD:
-		if(!stepper->invertAxis){
-			HAL_GPIO_WritePin(stepper->dirPort, stepper->dirPin, GPIO_PIN_RESET);
-		}
-		else{
-			HAL_GPIO_WritePin(stepper->dirPort, stepper->dirPin, GPIO_PIN_SET);
-		}
+		HAL_GPIO_WritePin(DROPPER_STEPPER_DIR_PORT, DROPPER_STEPPER_DIR_PIN, GPIO_PIN_SET);
+		break;
+	}
+}
+
+void _dropper_DrumSetMoveDirection(_stepperMoveDirection md){
+	switch(md){
+	case FORWARD:
+		HAL_GPIO_WritePin(PELLETED_SEEDS_STEPPER_DIR_PORT, PELLETED_SEEDS_STEPPER_EN_PIN, GPIO_PIN_RESET);
+		break;
+	case BACKWARD:
+		HAL_GPIO_WritePin(PELLETED_SEEDS_STEPPER_DIR_PORT, PELLETED_SEEDS_STEPPER_EN_PIN, GPIO_PIN_SET);
 		break;
 	}
 }
@@ -184,11 +180,11 @@ void _dropper_setStepperMoveDirection(_dropperStepperMotor * stepper,_stepperMov
 _seedSowingStatus _dropper_RotateDrum_deg(float angle_deg){
 
 	if(angle_deg < 0){
-		_dropper_setStepperMoveDirection(&(dDropper.drumMotor), BACKWARD);
+		_dropper_DrumSetMoveDirection(BACKWARD);
 		angle_deg = -angle_deg;
 	}
 	else{
-		_dropper_setStepperMoveDirection(&(dDropper.drumMotor), FORWARD);
+		_dropper_DrumSetMoveDirection(FORWARD);
 	}
 
 	uint32_t stepsToDo = (uint32_t)((angle_deg * (float)DRUM_STEPPER_MICROSTEPPING)/DEFAULT_ANGLE_PER_STEP);
@@ -214,13 +210,11 @@ _seedSowingStatus _dropper_RotateDrum_deg(float angle_deg){
 void _dropper_MoveDropper_mm(float distance_mm){
 
 	if(distance_mm < 0){
-//		_dropper_DropperSetMoveDirection(BACKWARD);
-		_dropper_setStepperMoveDirection(&dDropper.dropperMotor, BACKWARD);
+		_dropper_DropperSetMoveDirection(BACKWARD);
 		distance_mm = -distance_mm;
 	}
 	else{
-//		_dropper_DropperSetMoveDirection(FORWARD);
-		_dropper_setStepperMoveDirection(&dDropper.dropperMotor, FORWARD);
+		_dropper_DropperSetMoveDirection(FORWARD);
 	}
 
 	float distancePerStep_mm = (DEFAULT_ANGLE_PER_STEP*PI*(float)DROPPER_STEPPER_PULLEY_DIAMETER_MM)/360.0;
@@ -281,11 +275,13 @@ bool _dropper_SowSeeds(_dropperChannelName channel ){
 }
 
 void _dropper_ShakeSeeds(uint32_t delayTime){
-	_dropper_StartVibrate();
+	_dropper_StartVibrate(CASUAL);
+	_dropper_StartVibrate(PELLETED);
 
 	HAL_Delay(delayTime);
 
-	_dropper_StopVibrate();
+	_dropper_StopVibrate(CASUAL);
+	_dropper_StopVibrate(PELLETED);
 }
 
 void _dropper_Home(){
@@ -372,6 +368,5 @@ void _dropper_execCmd_MoveDropper(uint32_t distance_mm){
 }
 
 void _dropper_execCmd_Selftest(){
-	_dropper_SelfTest();
-	UART_sendMsg(CMD_EXEC_SUCCESFULLY_MSG);
+
 }
