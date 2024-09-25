@@ -30,7 +30,8 @@ Core/Src/UART_communication.o: ../Core/Src/UART_communication.c \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Core/Inc/dropper.h ../Core/Inc/config.h ../Core/Inc/tim.h \
- ../Core/Inc/gpio.h ../Core/Inc/UART_communication.h
+ ../Core/Inc/gpio.h ../Core/Inc/HW_logic.h ../Core/Inc/dcMotor.h \
+ ../Core/Inc/UART_communication.h ../Core/Inc/machineStates.h
 ../Core/Inc/UART_communication.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/main.h:
@@ -67,4 +68,7 @@ Core/Src/UART_communication.o: ../Core/Src/UART_communication.c \
 ../Core/Inc/config.h:
 ../Core/Inc/tim.h:
 ../Core/Inc/gpio.h:
+../Core/Inc/HW_logic.h:
+../Core/Inc/dcMotor.h:
 ../Core/Inc/UART_communication.h:
+../Core/Inc/machineStates.h:

@@ -1,0 +1,5 @@
+../Core/Src/box.c:5:6:_dropper_HomingSensorIRQ	4	static
+../Core/Src/box.c:9:6:box_Init	16	static
+../Core/Src/box.c:106:6:_box_execCmd_SowRow	32	static
+../Core/Src/box.c:149:6:_box_execCmd_PushEmptyMultiplat	16	static
+../Core/Src/box.c:195:6:_box_execCmd_PushFullMultiplat	4	static

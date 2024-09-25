@@ -18,7 +18,7 @@ typedef struct{
 	bool msgReadyToRead;
 
 	UART_HandleTypeDef* UART_Handler;
-} UART_structure;
+} UART_structure_t;
 
 #define CMD_NAME_LENGHT_T 4
 #define CMD_PARAMS_NUMBER_T 5
@@ -28,27 +28,35 @@ typedef struct{
 	double params[CMD_PARAMS_NUMBER_T];
 } command;
 
-extern UART_structure _dropper_UART;
+extern UART_structure_t box_main_UART;
 
-void UART_Init(UART_HandleTypeDef *huart);
-void clearRxBuffer();
-void clearTxBuffer();
-void UART_sendMsg(uint8_t * msg);
+void Communication_Init(UART_structure_t *, UART_HandleTypeDef *huart);
+void Communication_ClearRxBuffer(UART_structure_t *);
+void Communication_ClearTxBuffer(UART_structure_t *);
+void Communication_SendMsg(UART_structure_t *, uint8_t * msg);
 
-int8_t decodeMsg(command *cmd);
+//return number of correnctly read params
+int8_t Communication_DecodeMsg(UART_structure_t *, command *cmd);
 
 /////////////////////////////////////////////////////////////
-#define CMD_HELP 			"H10"
-#define CMD_HOME 			"H11"
-#define CMD_SEND_STATUS 	"S10"
-#define CMD_SOW				"S11"
-#define CMD_SELFTEST		"S12"
+#define CMD_HELP 					"H10"
+#define CMD_HOME 					"H11"
+#define CMD_SEND_STATUS 			"S10"
+#define CMD_SOW						"S11"
+#define CMD_SELFTEST				"S12"
+#define CMD_MOVE_DROPPER			"M10"
+#define CMD_MOVE_PUSHER 			"M11"
 
-#define CONFIRMATION_MSG	"OK\r\n"
-#define REJECTION_MSG		"NOK\r\n"
-#define INVALID_ARGUMET_MSG	"INVALID PARAMS\r\n"
+#define CMD_SOW_ROW					"S13"
+#define CMD_PUSH_FULL_MULTIPLAT		"P10"
+#define CMD_PUSH_EMPTY_MULTIPLAT	"P11"
+
+#define CONFIRMATION_MSG			"OK\r\n"
+#define REJECTION_MSG				"NOK\r\n"
+#define INVALID_ARGUMET_MSG			"INVALID PARAMS\r\n"
 #define CMD_EXEC_SUCCESFULLY_MSG	"CMD DONE, SUCCESS\r\n"
-#define CMD_EXEC_FAILED_MSG	"CMD DONE, FAILURE\r\n"
+#define CMD_EXEC_FAILED_MSG			"CMD DONE, FAILURE\r\n"
+#define MOVING_ERROR_TIMEOUT_MSG	"ERROR DURING MOVE, TIME OUT\r\n"
 
 //#define HELP_TEXT "AVAILABLE FUNCTIONS\r\n\
 //		H10 - help, list avaiable commands\r\n\
@@ -62,5 +70,9 @@ int8_t decodeMsg(command *cmd);
 		S11 [channel name] [number of seeds] - sow seeds from given channel,\
 			example: S11 1 1 sow 1 seed from the channel 1\r\n\
 		S12 - dropper selftest, not implemented yet\r\n"
+
+#define SELFTEST_INTRO "Rozpoczeto procedure autotestu. \
+		Elementu ukladu beda testowane sekwencyjnie.\r\n \
+		Po kazdym tescie wysli 't' lub poczekaj 5s aby przejsc dalej.\r\n"
 
 #endif //UART_COMMUNICATION_H

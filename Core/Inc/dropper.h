@@ -2,7 +2,10 @@
 #define DROPPER_H
 
 #include "config.h"
+#include "HW_logic.h"
+#include "dcMotor.h"
 #include "UART_communication.h"
+#include "machineStates.h"
 
 ////////////////		TYPES DEFINITIONS
 typedef enum {
@@ -12,109 +15,73 @@ typedef enum {
 	CHANNEL_4,
 	CHANNEL_5,
 	CHANNEL_6}
-_dropperChannelName;
+dropper_ChannelName_t;
 
 typedef enum {
 	CHANNEL_OPENED,
 	CHANNEL_CLOSED}
-_dropperChannelStatus;
-
-typedef enum {
-	MOTOR_ON,
-	MOTOR_OFF}
-_dropperVibrateMotorStatus;
+dropper_ChannelStatus_t;
 
 typedef enum{
 	CASUAL,
 	PELLETED}
-_seedsType;
-
-typedef enum{
-	FORWARD,
-	BACKWARD}
-_stepperMoveDirection;
-
-typedef enum {
-	IDLE,
-	INITIALIZED,
-	WORKING,
-	HOME,
-	STATE_ERR}
-_dropperState;
+dropper_SeedType_t;
 
 typedef enum {
 	SEED_SOWN,
 	SEED_ERR}
-_seedSowingStatus;
+dropper_seedSowingStatus_t;
 
 
 ////////////////		STRUCTURES DEFINITIONS
 
 typedef struct{
-	_dropperChannelName name;
-	_seedsType seedType;
-	_dropperChannelStatus status;
+	dropper_ChannelName_t name;
+	dropper_SeedType_t seedType;
+	dropper_ChannelStatus_t status;
 
 	GPIO_TypeDef * port;
 	uint16_t pin;
 
-} _dropperChannel;
+	logic_t lg;
+
+} dropperChannel_t;
 
 typedef struct{
-//	_seedsType seedType;
-	GPIO_TypeDef * port;
-	uint16_t pin;
+	dropperChannel_t channels [NUMBER_OF_CHANNELS];
+	dcMotor_t vibrateMotor;
 
-	_dropperVibrateMotorStatus status;
+	machineState_t state;
 
-}_dropperVibrateMotor;
-
-typedef struct{
-	_dropperState state;
-	_dropperChannel channels [NUMBER_OF_CHANNELS];
-	_dropperVibrateMotor vibrateMotor;
-
-}_dropper;
+} dropper_t;
 
 
 ////////////////		VARIABLES DECLARATIONS
 
 extern uint32_t stepCounter;
 extern bool isSeedSown;
-extern _dropper dDropper;
+extern dropper_t dDropper;
 
 
 ////////////////		FUNCTIONS HEADERS
 
 void _dropper_Init();
-void _dropper_OpenChannel(_dropperChannelName);
-void _dropper_CloseChannel(_dropperChannelName);
-void _dropper_StartVibrate();
-void _dropper_StopVibrate();
-_seedSowingStatus _dropper_RotateDrum_deg(float);
-void _dropper_MoveDropper_mm(float);
+void dropper_OpenChannel(dropperChannel_t *);
+void dropper_CloseChannel(dropperChannel_t *);
+void dropper_StartVibrate(dropper_t * );
+void dropper_StopVibrate(dropper_t * );
 void _dropper_DropperSetMoveDirection(_stepperMoveDirection);
 void _dropper_DrumSetMoveDirection(_stepperMoveDirection);
+void _dropper_MoveDropper_mm(double);
+dropper_seedSowingStatus_t _dropper_RotateDrum_deg(float);
+double _dropper_getChannelOffset(dropper_ChannelName_t channel);
 
-bool _dropper_SowSeeds(_dropperChannelName);
+dropper_seedSowingStatus_t _dropper_SowSeeds(dropper_ChannelName_t);
 void _dropper_ShakeSeeds(uint32_t);
-void _dropper_Home();
 
 void _dropper_SelfTest();
 void _dropper_StepIRQ();
 void _dropper_SeedSensorIRQ();
 void _dropper_HomingSensorIRQ();
-
-
-// REMOTE COMMANDS FUNCTIONS
-void _dropper_execCmd();
-
-void _dropper_execCmd_Help();
-void _dropper_execCmd_GetStatus();
-void _dropper_execCmd_Sow(uint8_t channelNo, uint8_t noOfSeeds);
-void _dropper_execCmd_SowExt(uint8_t channelNo, uint8_t noOfSeeds, uint8_t potNo);
-void _dropper_execCmd_HomeDropper();
-void _dropper_execCmd_MoveDropper(uint32_t distance_mm);
-void _dropper_execCmd_Selftest();
 
 #endif //DROPPER_H

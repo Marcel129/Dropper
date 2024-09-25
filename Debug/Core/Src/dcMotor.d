@@ -1,5 +1,6 @@
-Core/Src/stm32g4xx_hal_msp.o: ../Core/Src/stm32g4xx_hal_msp.c \
- ../Core/Inc/main.h ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
+Core/Src/dcMotor.o: ../Core/Src/dcMotor.c ../Core/Inc/dcMotor.h \
+ ../Core/Inc/gpio.h ../Core/Inc/main.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_def.h \
@@ -29,8 +30,10 @@ Core/Src/stm32g4xx_hal_msp.o: ../Core/Src/stm32g4xx_hal_msp.c \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Core/Inc/dropper.h ../Core/Inc/config.h ../Core/Inc/tim.h \
- ../Core/Inc/main.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/UART_communication.h
+ ../Core/Inc/usart.h ../Core/Inc/HW_logic.h ../Core/Inc/dcMotor.h \
+ ../Core/Inc/UART_communication.h ../Core/Inc/machineStates.h
+../Core/Inc/dcMotor.h:
+../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -64,7 +67,8 @@ Core/Src/stm32g4xx_hal_msp.o: ../Core/Src/stm32g4xx_hal_msp.c \
 ../Core/Inc/dropper.h:
 ../Core/Inc/config.h:
 ../Core/Inc/tim.h:
-../Core/Inc/main.h:
 ../Core/Inc/usart.h:
-../Core/Inc/gpio.h:
+../Core/Inc/HW_logic.h:
+../Core/Inc/dcMotor.h:
 ../Core/Inc/UART_communication.h:
+../Core/Inc/machineStates.h:

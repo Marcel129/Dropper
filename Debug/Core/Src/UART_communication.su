@@ -1,6 +1,6 @@
-../Core/Src/UART_communication.c:5:6:UART_Init	16	static
-../Core/Src/UART_communication.c:13:1:HAL_UART_RxCpltCallback	16	static
-../Core/Src/UART_communication.c:26:6:clearRxBuffer	16	static
-../Core/Src/UART_communication.c:35:6:clearTxBuffer	16	static
-../Core/Src/UART_communication.c:41:8:decodeMsg	64	static
-../Core/Src/UART_communication.c:84:6:UART_sendMsg	24	static
+../Core/Src/UART_communication.c:5:1:HAL_UART_RxCpltCallback	16	static
+../Core/Src/UART_communication.c:18:6:Communication_Init	16	static
+../Core/Src/UART_communication.c:26:6:Communication_ClearRxBuffer	24	static
+../Core/Src/UART_communication.c:35:6:Communication_ClearTxBuffer	24	static
+../Core/Src/UART_communication.c:41:8:Communication_DecodeMsg	64	static
+../Core/Src/UART_communication.c:84:6:Communication_SendMsg	24	static
