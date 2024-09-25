@@ -24,7 +24,7 @@ machineState_t pusher_HomeToMin(pusher_t * pusher){
 	}
 
 	dcMotor_stop(&(pusher->motor));
-	return MACHINE_OK;
+	return MACHINE_WORKING;
 }
 
 machineState_t pusher_HomeToMax(pusher_t * pusher){
@@ -43,5 +43,5 @@ machineState_t pusher_HomeToMax(pusher_t * pusher){
 	}
 
 	dcMotor_stop(&(pusher->motor));
-	return MACHINE_OK;
+	return MACHINE_WORKING;
 }

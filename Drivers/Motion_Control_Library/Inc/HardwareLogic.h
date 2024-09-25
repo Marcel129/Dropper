@@ -9,7 +9,7 @@ logicType_t;
 typedef struct{
 	GPIO_PinState activeState, inactiveState;
 	logicType_t logicType;
-}logic_t;
+} logic_t;
 
 void HW_logic_setLogic(logic_t*, logicType_t);
 logicType_t HW_logic_invertLogic(logic_t*); //return setted logic

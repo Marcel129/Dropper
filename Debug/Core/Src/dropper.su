@@ -1,0 +1,15 @@
+../Core/Src/dropper.c:8:6:dropper_StepIRQ	16	static
+../Core/Src/dropper.c:12:6:dropper_SeedSensorIRQ	16	static
+../Core/Src/dropper.c:16:6:_dropper_Init	4	static
+../Core/Src/dropper.c:89:6:dropper_OpenChannel	16	static
+../Core/Src/dropper.c:94:6:dropper_CloseChannel	16	static
+../Core/Src/dropper.c:99:6:dropper_StartVibrate	16	static
+../Core/Src/dropper.c:102:6:dropper_StopVibrate	16	static
+../Core/Src/dropper.c:106:6:dropper_SelfTest	16	static
+../Core/Src/dropper.c:152:6:dropper_DropperSetMoveDirection	16	static
+../Core/Src/dropper.c:163:6:dropper_DrumSetMoveDirection	16	static
+../Core/Src/dropper.c:174:28:dropper_RotateDrum_deg	24	static
+../Core/Src/dropper.c:204:6:dropper_MoveDropper_mm	40	static
+../Core/Src/dropper.c:227:28:dropper_SowSeeds	24	static
+../Core/Src/dropper.c:283:6:dropper_Home	24	static
+../Core/Src/dropper.c:305:8:dropper_getChannelOffset	16	static

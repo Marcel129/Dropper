@@ -16,22 +16,24 @@ typedef struct{
 	UART_structure_t * box_Communication_Handler;
 }box_t;
 
+extern box_t box;
+
 void box_Init();
-void _box_execCmd_StartMovePusher(uint8_t pusherName, dcMotor_moveDirection_t dir);
-void _box_execCmd_StoptMovePusher(uint8_t pusherName, dcMotor_moveDirection_t dir);
-void _box_execCmd_SowRow(uint8_t channelNo);
-void _box_execCmd_PushEmptyMultiplat();
-void _box_execCmd_PushFullMultiplat();
+void box_execCmd_StartMovePusher(box_t*, uint8_t pusherName, dcMotor_moveDirection_t dir);
+void box_execCmd_StoptMovePusher(box_t*, uint8_t pusherName, dcMotor_moveDirection_t dir);
+void box_execCmd_SowRow(box_t*, uint8_t channelNo);
+void box_execCmd_PushEmptyMultiplat(box_t*);
+void box_execCmd_PushFullMultiplat(box_t*);
 
 // REMOTE COMMANDS FUNCTIONS
 void _dropper_execCmd();
 
-void _dropper_execCmd_Help();
-void _dropper_execCmd_GetStatus();
-void _dropper_execCmd_Sow(uint8_t channelNo, uint8_t noOfSeeds);
-void _dropper_execCmd_SowExt(uint8_t channelNo, uint8_t noOfSeeds, uint8_t potNo);
-void _dropper_execCmd_HomeDropper();
-void _dropper_execCmd_MoveDropper(double distance_mm);
-void _dropper_execCmd_Selftest();
+void _dropper_execCmd_Help(box_t*);
+void _dropper_execCmd_GetStatus(box_t*);
+void _dropper_execCmd_Sow(box_t*, uint8_t channelNo, uint8_t noOfSeeds);
+void _dropper_execCmd_SowExt(box_t*, uint8_t channelNo, uint8_t noOfSeeds, uint8_t potNo);
+void _dropper_execCmd_HomeDropper(box_t*);
+void _dropper_execCmd_MoveDropper(box_t*, double distance_mm);
+void _dropper_execCmd_Selftest(box_t*);
 
 #endif /* INC_BOX_H_ */

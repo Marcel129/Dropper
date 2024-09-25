@@ -25,11 +25,11 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "box.h"
+#include "mBox->h"
 
 void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef *htim){
 	if(htim->Instance == TIM3){
-		_dropper_StepIRQ();
+		dropper_StepIRQ(&mBox->dropper);
 	}
 }
 
@@ -38,10 +38,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	if(GPIO_Pin == SEED_SENSOR_CHANNEL_1_PIN	 ||
 			GPIO_Pin == SEED_SENSOR_CHANNEL_2_PIN ||
 			GPIO_Pin == SEED_SENSOR_CHANNEL_3_PIN){
-		_dropper_SeedSensorIRQ();
+		dropper_SeedSensorIRQ(&mBox->dropper);
 	}
 	else if(GPIO_Pin == DROPPER_HOMING_SENSOR_PIN){
-		_dropper_HomingSensorIRQ();
+		dropper_HomingSensorIRQ(&mBox->dropper);
 	}
 }
 
@@ -132,37 +132,37 @@ int main(void)
 		if(box_main_UART.msgReadyToRead) _dropper_execCmd();
 
 		if(s5 != HAL_GPIO_ReadPin(SENSOR_5_GPIO_Port, SENSOR_5_Pin)){
-			Communication_SendMsg("S5 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler, "S5 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 		if(s6 != HAL_GPIO_ReadPin(SENSOR_6_GPIO_Port, SENSOR_6_Pin)){
-			Communication_SendMsg("S6 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S6 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 		if(s7 != HAL_GPIO_ReadPin(SENSOR_7_GPIO_Port, SENSOR_7_Pin)){
-			Communication_SendMsg("S7 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S7 zmienil stan\r\n");
 			HAL_Delay(500);
 			//dolny max
 		}
 		if(s8 != HAL_GPIO_ReadPin(SENSOR_8_GPIO_Port, SENSOR_8_Pin)){
-			Communication_SendMsg("S8 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S8 zmienil stan\r\n");
 			HAL_Delay(500);
 			//dolny min
 		}
 		if(s9 != HAL_GPIO_ReadPin(SENSOR_9_GPIO_Port, SENSOR_9_Pin)){
-			Communication_SendMsg("S9 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S9 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 		if(s10 != HAL_GPIO_ReadPin(SENSOR_10_GPIO_Port, SENSOR_10_Pin)){
-			Communication_SendMsg("S10 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S10 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 		if(s11 != HAL_GPIO_ReadPin(SENSOR_11_GPIO_Port, SENSOR_11_Pin)){
-			Communication_SendMsg("S11 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S11 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 		if(s12 != HAL_GPIO_ReadPin(SENSOR_12_GPIO_Port, SENSOR_12_Pin)){
-			Communication_SendMsg("S12 zmienil stan\r\n");
+			Communication_SendMsg(&mBox->box_Communication_Handler,"S12 zmienil stan\r\n");
 			HAL_Delay(500);
 		}
 

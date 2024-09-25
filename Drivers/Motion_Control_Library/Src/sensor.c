@@ -2,7 +2,7 @@
 
 void sensor_Init(sensor_t * s, GPIO_TypeDef * pPort, uint16_t pPin, logicType_t lg){
 	s->port = pPort;
-	s->pin - pPin;
+	s->pin = pPin;
 	HW_logic_setLogic(&(s->logic), lg);
 }
 

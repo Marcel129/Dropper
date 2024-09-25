@@ -1,4 +1,4 @@
-#include "HW_logic.h"
+#include "HardwareLogic.h"
 
 void HW_logic_setLogic(logic_t* l, logicType_t lt){
 	switch(lt){

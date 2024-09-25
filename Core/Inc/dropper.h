@@ -1,11 +1,12 @@
 #ifndef DROPPER_H
 #define DROPPER_H
 
+#include <dcMotor.h>
+#include <HardwareLogic.h>
+#include <sensor.h>
+#include <machineStates.h>
 #include "config.h"
-#include "HW_logic.h"
-#include "dcMotor.h"
 #include "UART_communication.h"
-#include "machineStates.h"
 
 ////////////////		TYPES DEFINITIONS
 typedef enum {
@@ -33,6 +34,7 @@ typedef enum {
 dropper_seedSowingStatus_t;
 
 
+
 ////////////////		STRUCTURES DEFINITIONS
 
 typedef struct{
@@ -50,6 +52,8 @@ typedef struct{
 typedef struct{
 	dropperChannel_t channels [NUMBER_OF_CHANNELS];
 	dcMotor_t vibrateMotor;
+
+	sensor_t homingSensor;
 
 	machineState_t state;
 
@@ -70,18 +74,18 @@ void dropper_OpenChannel(dropperChannel_t *);
 void dropper_CloseChannel(dropperChannel_t *);
 void dropper_StartVibrate(dropper_t * );
 void dropper_StopVibrate(dropper_t * );
-void _dropper_DropperSetMoveDirection(_stepperMoveDirection);
-void _dropper_DrumSetMoveDirection(_stepperMoveDirection);
-void _dropper_MoveDropper_mm(double);
-dropper_seedSowingStatus_t _dropper_RotateDrum_deg(float);
-double _dropper_getChannelOffset(dropper_ChannelName_t channel);
+void dropper_DropperSetMoveDirection(dropper_t * , dcMotor_moveDirection_t);
+void dropper_DrumSetMoveDirection(dropper_t * , dcMotor_moveDirection_t);
+void dropper_MoveDropper_mm(dropper_t * ,double);
+dropper_seedSowingStatus_t dropper_RotateDrum_deg(dropper_t *, float);
+double dropper_getChannelOffset(dropperChannel_t *);
+void dropper_Home(dropper_t *);
 
-dropper_seedSowingStatus_t _dropper_SowSeeds(dropper_ChannelName_t);
-void _dropper_ShakeSeeds(uint32_t);
+dropper_seedSowingStatus_t dropper_SowSeeds(dropper_t *, dropperChannel_t *);
+//void _dropper_ShakeSeeds(uint32_t);
 
-void _dropper_SelfTest();
-void _dropper_StepIRQ();
-void _dropper_SeedSensorIRQ();
-void _dropper_HomingSensorIRQ();
+void dropper_SelfTest(dropper_t *);
+void dropper_StepIRQ(dropper_t *);
+void dropper_SeedSensorIRQ(dropper_t *);
 
 #endif //DROPPER_H

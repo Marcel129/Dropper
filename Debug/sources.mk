@@ -23,5 +23,6 @@ C_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
+Drivers/Motion_Control_Library/Src \
 Drivers/STM32G4xx_HAL_Driver/Src \
 

@@ -1,14 +1,13 @@
 #ifndef INC_SENSOR_H_
 #define INC_SENSOR_H_
 
-#include "gpio.h"
-#include "HW_logic.h"
+#include "HardwareLogic.h"
 
 typedef struct{
 	GPIO_TypeDef * port;
 	uint16_t pin;
 
-	logic_t logic;
+	logicLOL_t logic;
 
 } sensor_t;
 

@@ -1,5 +1,7 @@
 Core/Src/dropper.o: ../Core/Src/dropper.c ../Core/Inc/dropper.h \
- ../Core/Inc/config.h ../Core/Inc/tim.h ../Core/Inc/main.h \
+ C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/dcMotor.h \
+ C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/HardwareLogic.h \
+ ../Core/Inc/gpio.h ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
@@ -29,12 +31,16 @@ Core/Src/dropper.o: ../Core/Src/dropper.c ../Core/Inc/dropper.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/dropper.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Inc/HW_logic.h ../Core/Inc/dcMotor.h \
- ../Core/Inc/UART_communication.h ../Core/Inc/machineStates.h
+ ../Core/Inc/dropper.h \
+ C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/sensor.h \
+ C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/HardwareLogic.h \
+ C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/machineStates.h \
+ ../Core/Inc/config.h ../Core/Inc/tim.h ../Core/Inc/usart.h \
+ ../Core/Inc/gpio.h ../Core/Inc/UART_communication.h
 ../Core/Inc/dropper.h:
-../Core/Inc/config.h:
-../Core/Inc/tim.h:
+C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/dcMotor.h:
+C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/HardwareLogic.h:
+../Core/Inc/gpio.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -66,9 +72,11 @@ Core/Src/dropper.o: ../Core/Src/dropper.c ../Core/Inc/dropper.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
 ../Core/Inc/dropper.h:
+C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/sensor.h:
+C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/HardwareLogic.h:
+C:/Users/Marcel/STM32CubeIDE/workspace_1.11.2/siewnik_15_09_2024_Opatow/Drivers/Motion_Control_Library/Inc/machineStates.h:
+../Core/Inc/config.h:
+../Core/Inc/tim.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/gpio.h:
-../Core/Inc/HW_logic.h:
-../Core/Inc/dcMotor.h:
 ../Core/Inc/UART_communication.h:
-../Core/Inc/machineStates.h:
